@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audiobookshelf
+  namespace: audiobookshelf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audiobookshelf
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: audiobookshelf
+    spec:
+      containers:
+        - name: audiobookshelf
+          image: ghcr.io/advplyr/audiobookshelf:2.2.15
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: audiobook-data
+              mountPath: /audiobooks
+              subPath: audiobooks
+            - name: audiobook-data
+              mountPath: /config
+              subPath: config
+            - name: audiobook-data
+              mountPath: /metadata
+              subPath: metadata
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+            requests:
+              memory: 512Mi
+      volumes:
+        - name: audiobook-data
+          persistentVolumeClaim:
+            claimName: audiobook-pvc

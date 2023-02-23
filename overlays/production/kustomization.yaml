@@ -1,0 +1,9 @@
+# Kustomization file to use the base and add the ingress
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: audiobookshelf
+bases:
+  - ../../base
+resources:
+  - ingress.yaml

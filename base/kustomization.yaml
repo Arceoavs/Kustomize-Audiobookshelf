@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: audiobookshelf
+resources:
+  - deployment.yaml
+  - service.yaml
+  - namespace.yaml
+  - pvc.yaml
+images:
+  - name: ghcr.io/advplyr/audiobookshelf
+    newName: ghcr.io/advplyr/audiobookshelf
+    newTag: 2.2.15
